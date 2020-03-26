@@ -75,7 +75,7 @@ int last_iteration_safe_heading=0;
 //********************* TUNNNG PARAMETERS *********************
 //**** FOR Color filter TUNNING
 float AVOID_dist_threat = 1.5; // typically between 2 and 3.5. 
-int AVOID_keep_escape_count = 130;   // typically between 0 and 90. This is to avoid oscillations in the escape route. The higher, the fewer oscillations
+int AVOID_keep_escape_count = 230;   // typically between 0 and 90. This is to avoid oscillations in the escape route. The higher, the fewer oscillations
 //**** FOR Optical Flow TUNNING
 float AVOID_OF_angle = 3.5 * M_PI/180;  // angle for which we look at the Optical flow
 float OF_NEXT_HEADING_INFLUENCE = 0.25;  // Gain of escpae route from the optical flow-based avoidance
@@ -161,7 +161,7 @@ if(safety_level!=ESCAPE_IN_PROGRESS){
 // }
 nav_set_heading_towards_waypoint(WP_GOAL);
 distance_travelled+=distance_travelled_last_iteration();
-printf("\n Distance tavelled= %f \n", distance_travelled);
+//printf("\n Distance tavelled= %f \n", distance_travelled);
 // Deallocate
 // float *GLOBAL_OF_VECTOR = NULL; 
 }
@@ -187,7 +187,7 @@ void determine_if_safe(){
   if(AVOID_keep_slow_count!=0){
     safety_level = ESCAPE_IN_PROGRESS;
     AVOID_keep_slow_count += 1;
-    printf("Hold in progress \n");
+    //printf("Hold in progress \n");
 
    //if(isCoordInRadius(&AVOID_start_avoid_coord, 2.4) == true){
    if(AVOID_keep_slow_count > AVOID_keep_escape_count){
@@ -237,7 +237,7 @@ bool safety_check_optical_flow(float *AVOID_safety_optical_flow, float x2, float
 // - Finds the partition with smallest OF (partition i)
 // - saffest heading is the middle value of the i-th partition with span="angular_span"
 float safe_heading(float array_of[]){
-  printf("\nOF activated\n");
+  //printf("\nOF activated\n");
   float field_of_view=M_PI/2;
   float angular_span=field_of_view/NUMBER_OF_PARTITIONS;
   
@@ -360,8 +360,8 @@ void circle(float current_time, float *TRAJECTORY_X, float *TRAJECTORY_Y, int r)
 
   if(safety_level==THREAT){
     dt = AVOID_slow_dt;
-    r-=fabs(AVOID_objects[AVOID_biggest_threat][1])*450;
-    printf("[%d %d] \n", final_objs[AVOID_biggest_threat][2], r);
+    r-=final_objs[AVOID_biggest_threat][2]*300;
+    //printf("[%f %f] \n", final_objs[AVOID_biggest_threat][2], r);
     AVOID_keep_slow_count += 1;
   }
   else if(safety_level==SAFE){
@@ -386,7 +386,8 @@ void square(float dt, float *TRAJECTORY_X, float *TRAJECTORY_Y, int r)
 
   if(safety_level==THREAT){
     dt = AVOID_slow_dt;
-    r-=fabs(AVOID_objects[AVOID_biggest_threat][1])*600;
+    //r-=fabs(AVOID_objects[AVOID_biggest_threat][1])*600;
+    r-=final_objs[AVOID_biggest_threat][2]*300;
     //moveWaypointForwaifrdWithDirection(WP_STDBY, 100.0, -45*M_PI/180.0);
     //printf("[%d %d] \n", final_objs[AVOID_biggest_threat][2], r);
     AVOID_keep_slow_count += 1;

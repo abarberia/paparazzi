@@ -26,6 +26,7 @@
 
 #include "modules/computer_vision/cv.h"
 #include "modules/observer/observer.h"
+// #include "generated/flight_plan.h"
 #include "state.h"
 #include <stdio.h>
 #include <time.h>
@@ -50,7 +51,7 @@ void image_specfilt(struct image_t *input, struct image_t *output1,
                       uint8_t v_m, uint8_t v_M, uint8_t *mask);
 void image_bgfilt(struct image_t *input, struct image_t *output, uint8_t y_m, 
                   uint8_t y_M, uint8_t u_m, uint8_t u_M, uint8_t v_m, 
-                  uint8_t v_M, bool color);
+                  uint8_t v_M, bool color, bool remove_ground);
 void convolve(struct image_t *input, struct image_t *output);
 void convolve_big(struct image_t *input, struct image_t *output);
 void blur_image(struct image_t *input, struct image_t *output);
@@ -59,12 +60,14 @@ void blur_mask(struct image_t *input, uint8_t *mask);
 void detect_poles(uint16_t *poles);
 void find_orange_objs();
 void find_green_objs();  
-void find_rand_objs();
+void find_rand_objs(struct image_t *input);
+void logic_curtain(uint16_t idx1, uint16_t idx2, struct image_t *input);
+void logic_free(uint16_t idx1, uint16_t idx2);
 void combine_measurements();
 void delete_outliers();
 void find_distances();
 
-extern float final_objs[100][3];
+extern float final_objs[100][4];
 
 // Init function
 extern void observer_node_init(void);
@@ -83,7 +86,6 @@ extern void observer_node_init(void);
 // const extern uint8_t cf[n_cf][n_cols] = {{0,   255, 0,   255, 0,   255},
 //                                   {100, 255, 100, 255, 100, 255}};
 
-// Other shit
 
 
 #endif

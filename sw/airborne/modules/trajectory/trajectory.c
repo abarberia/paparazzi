@@ -270,7 +270,7 @@ float safe_heading(float array_of[]){
   }
 
   if(safe_mode_previous){
-    if(partition_OF[last_iteration_safe_heading]<0.1){
+    if(partition_OF[last_iteration_safe_heading]<0.5){
       float safest_heading = -1*field_of_view/2 + last_iteration_safe_heading * angular_span + angular_span/2;
       return safest_heading;
     }

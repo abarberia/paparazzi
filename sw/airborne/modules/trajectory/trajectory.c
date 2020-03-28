@@ -409,7 +409,7 @@ void square(float dt, float *TRAJECTORY_X, float *TRAJECTORY_Y, int r)
 {
   int V = 700;
 
-  determine_if_safe();
+  //determine_if_safe();
 
   if(safety_level==THREAT){
     dt = AVOID_slow_dt;
@@ -466,7 +466,7 @@ void square(float dt, float *TRAJECTORY_X, float *TRAJECTORY_Y, int r)
 void lace(float dt, float *TRAJECTORY_X, float *TRAJECTORY_Y, int r)
 {
   int V = 700;
-  determine_if_safe();
+  //determine_if_safe();
 
   if(lace_mode==1){
     if(safety_level==THREAT){
